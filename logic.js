@@ -45,10 +45,15 @@ Parser.prototype = {
 				var atrs = sub.match(/\S+/g);
 				var tag = atrs[0];
 				atrs.splice(0, 1);
-				if (tag[0] == '/') 
+				if (tag == "/body")
+					this.endDoc();
+				else if (tag == "body" && tag[0] != '/')
+					this.startDoc();
+				else if (tag[0] == '/')
 					this.endTag(tag.slice(1, tag.length));
 				else
 					this.startTag(tag, atrs);
+
 				pos += sub.length;
 			}
 		}
